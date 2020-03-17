@@ -1,0 +1,453 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     14173,        445]
+NotebookOptionsPosition[     10738,        352]
+NotebookOutlinePosition[     11095,        368]
+CellTagsIndexPosition[     11052,        365]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Introduction to Computational Physical Chemistry", "Title",
+ CellChangeTimes->{{3.709386849615201*^9, 
+  3.709386867236033*^9}},ExpressionUUID->"782d65f2-7c3e-45ad-ba68-\
+d0140a42bc3e"],
+
+Cell[TextData[{
+ "\[Copyright] 2017 by Joshua Schrier and University Science Books  (Version: \
+25 July 2017)\nPublisher\[CloseCurlyQuote]s Website: ",
+ ButtonBox["http://www.uscibooks.com/schrier.htm",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.uscibooks.com/schrier.htm"], None},
+  ButtonNote->"http://www.uscibooks.com/schrier.htm"]
+}], "Text",
+ CellChangeTimes->{{3.709993679645603*^9, 3.709993696805031*^9}, {
+  3.709993770943479*^9, 3.709993786836944*^9}, {3.7099942610285673`*^9, 
+  3.709994268595498*^9}},ExpressionUUID->"80522b0e-1c60-4fe1-aba4-\
+a16a607f953f"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Appendix C - Energy Levels of ",
+ StyleBox["Noninteracting",
+  IgnoreSpellCheck->True],
+ " Molecules"
+}], "Chapter",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQBmIQfT/hs4DE4teO7rKigiDa7/jhV/5Aevq1E2DaT9bv
+ZgiQzokPBNNB/6Y9BtHlZfFPQHR+2IWgUCDtkKYVDKJrz3D0hgFpo1ClPhB9
+2nbJmWwgPePt+ksgWkzKWqQKSM//oicKotdP81ZeCqT3HD4Hpv9wp89eDqQf
+qvrNAdEXkrw2rATS+lskNoLol/m7lS8A6S1RW1VA9BObiUuvAukTG5+B6b2h
+taullrx2fFd7B0yrnag9JwukLd0ugenCpzPs5YH0ntPLHUD0vA9fqhSA9Kw3
+ojUgmkX94HYlIN0cUL0DRDMs9MtRB9JC7KvBNADp4KJn
+  
+  "],ExpressionUUID->"4e3e6317-d650-4937-bc46-f519791dc650"],
+
+Cell[CellGroupData[{
+
+Cell["C.4 VIBRATIONAL AND ROTATIONAL ENERGY LEVELS", "Section",
+ CellChangeTimes->{
+  3.70992295724895*^9, {3.709925903761104*^9, 3.709925908814856*^9}, {
+   3.709928424021338*^9, 3.709928426013328*^9}, {3.709933001365942*^9, 
+   3.709933004251739*^9}, {3.709942642263529*^9, 
+   3.7099426507430897`*^9}},ExpressionUUID->"c0d64b44-8090-4183-9d7a-\
+9895534b8d4c"],
+
+Cell[CellGroupData[{
+
+Cell["C.4.1 Diatomic molecules", "Subsection",
+ CellChangeTimes->{{3.709933010896379*^9, 3.709933015211718*^9}, {
+  3.7099426557847147`*^9, 
+  3.7099426577517843`*^9}},ExpressionUUID->"89f392d9-c3b4-4d25-93d9-\
+647edc91918d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"energyVibDiatomic", "[", 
+   RowBox[{"hbarOmega_", ",", "v_"}], "]"}], ":=", 
+  RowBox[{"hbarOmega", "*", 
+   RowBox[{"(", 
+    RowBox[{"v", "+", "0.5"}], ")"}]}]}]], "Input",
+ CellChangeTimes->{{3.709942663608452*^9, 
+  3.7099426636098013`*^9}},ExpressionUUID->"df793628-ffb2-40ec-a337-\
+220eefdc2bdd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"energyVibDiatomic", "[", 
+  RowBox[{"x", ",", "y"}], "]"}]], "Input",
+ CellChangeTimes->{{3.709942672192477*^9, 
+  3.709942675145254*^9}},ExpressionUUID->"217f59e9-6d6a-4910-87ea-\
+5db99136ce6e"],
+
+Cell[BoxData[
+ RowBox[{"x", " ", 
+  RowBox[{"(", 
+   RowBox[{"0.5`", "\[VeryThinSpace]", "+", "y"}], ")"}]}]], "Output",
+ CellChangeTimes->{{3.709942672763267*^9, 
+  3.709942690354912*^9}},ExpressionUUID->"8197fc80-c756-4f7d-b2b6-\
+65a536a0128f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"energyVibDiatomic", "[", 
+  RowBox[{"x", ",", "0"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7099426965928507`*^9, 
+  3.70994269783066*^9}},ExpressionUUID->"cf4736ed-949c-49e2-9fa1-\
+0696e3c6a37f"],
+
+Cell[BoxData[
+ RowBox[{"0.5`", " ", "x"}]], "Output",
+ CellChangeTimes->{
+  3.709942698329747*^9},ExpressionUUID->"99137566-856a-4fb7-987d-\
+0d9ae322a06d"]
+}, Open  ]],
+
+Cell[TextData[StyleBox["Erratum (first printing) p. 447 - Output in book \
+should be changed from \[OpenCurlyDoubleQuote]01. \[OpenCurlyDoubleQuote] to \
+\[OpenCurlyDoubleQuote]0.1\[CloseCurlyDoubleQuote]",
+ FontSlant->"Italic"]], "Text",
+ CellChangeTimes->{{3.709942789978734*^9, 3.7099428066187143`*^9}, {
+  3.710603939058812*^9, 
+  3.710603940625997*^9}},ExpressionUUID->"c60bb66a-1cce-4978-a55f-\
+572bc3ee0da6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"energyVibDiatomic", "[", 
+  RowBox[{"0.1", ",", "y"}], "]"}]], "Input",
+ CellChangeTimes->{{3.70994270262457*^9, 
+  3.7099427026261044`*^9}},ExpressionUUID->"66dfe822-919a-4bd0-bcd9-\
+df502dcc197a"],
+
+Cell[BoxData[
+ RowBox[{"0.1`", " ", 
+  RowBox[{"(", 
+   RowBox[{"0.5`", "\[VeryThinSpace]", "+", "y"}], ")"}]}]], "Output",
+ CellChangeTimes->{
+  3.709942703087386*^9},ExpressionUUID->"e0a49f88-655d-45a5-a088-\
+9a29b15f4eaf"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"energyVibDiatomic", "[", 
+  RowBox[{"0.1", ",", "0"}], "]"}]], "Input",
+ CellChangeTimes->{{3.709942824645111*^9, 
+  3.709942824646522*^9}},ExpressionUUID->"ebbfa26f-3b72-41a8-b42f-\
+d6e731937ac0"],
+
+Cell[BoxData["0.05`"], "Output",
+ CellChangeTimes->{
+  3.709942825541321*^9},ExpressionUUID->"f117bbb4-2369-42aa-96d0-\
+d37fb039f14e"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"energyRotLinear", "[", 
+   RowBox[{"B_", ",", "J_"}], "]"}], ":=", 
+  RowBox[{"B", "*", "J", "*", 
+   RowBox[{"(", 
+    RowBox[{"J", "+", "1"}], ")"}]}]}]], "Input",
+ CellChangeTimes->{{3.7099428314110394`*^9, 
+  3.709942831413074*^9}},ExpressionUUID->"1ba3a607-1789-4a1a-a06b-\
+dce9f5574916"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"degenRotLinear", "[", "J_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"2", "*", "J"}], "+", "1"}]}]], "Input",
+ CellChangeTimes->{{3.7099428378700047`*^9, 
+  3.7099428378718367`*^9}},ExpressionUUID->"595feafb-e750-4472-b364-\
+a69ce53fa068"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["C.4.2 Linear polyatomic molecules", "Subsection",
+ CellChangeTimes->{{3.709942844450653*^9, 
+  3.70994284778439*^9}},ExpressionUUID->"696e23d4-a328-419f-9683-\
+b6c30e22966e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"energyVib", "[", 
+   RowBox[{"vibConstants_", ",", "vibQNumbers_"}], "]"}], ":=", 
+  RowBox[{"Sum", "[", " ", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"vibConstants", "[", 
+      RowBox[{"[", "i", "]"}], "]"}], "*", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"vibQNumbers", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], "+", "0.5"}], ")"}]}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "1", ",", 
+      RowBox[{"Length", "[", "vibConstants", "]"}]}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.709942853455451*^9, 
+  3.709942864538464*^9}},ExpressionUUID->"47c30213-81be-4342-966e-\
+887ca530375b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"energyVib", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"const1", ",", "const2", ",", "const3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"v1", ",", "v2", ",", "v3"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7099428709390793`*^9, 
+  3.7099428709407797`*^9}},ExpressionUUID->"aa5a60a4-e9d1-45b5-b216-\
+7bb3770d6e07"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"const1", " ", 
+   RowBox[{"(", 
+    RowBox[{"0.5`", "\[VeryThinSpace]", "+", "v1"}], ")"}]}], "+", 
+  RowBox[{"const2", " ", 
+   RowBox[{"(", 
+    RowBox[{"0.5`", "\[VeryThinSpace]", "+", "v2"}], ")"}]}], "+", 
+  RowBox[{"const3", " ", 
+   RowBox[{"(", 
+    RowBox[{"0.5`", "\[VeryThinSpace]", "+", "v3"}], ")"}]}]}]], "Output",
+ CellChangeTimes->{
+  3.709942871819569*^9},ExpressionUUID->"5aa23f03-40f2-44c1-9c70-\
+494e48785fea"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"energyVib", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0.1", ",", "0.2", ",", "0.3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.709942879028717*^9, 
+  3.7099428790303507`*^9}},ExpressionUUID->"06d5f6d3-d96e-404a-972a-\
+ccbc02fe428b"],
+
+Cell[BoxData["0.6`"], "Output",
+ CellChangeTimes->{
+  3.709942879776164*^9},ExpressionUUID->"8271c474-89e9-493a-8f23-\
+49492d9f3750"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"energyVibDiatomic", "[", 
+   RowBox[{"hbarOmega_", ",", "v_"}], "]"}], ":=", 
+  RowBox[{"energyVib", "[", 
+   RowBox[{
+    RowBox[{"{", "hbarOmega", "}"}], ",", 
+    RowBox[{"{", "v", "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.70994288625849*^9, 
+  3.709942886260151*^9}},ExpressionUUID->"10e27608-522b-4e2e-bcbd-\
+9f77aac6063b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["C.4.3 Non-linear polyatomic molecules", "Subsection",
+ CellChangeTimes->{{3.709942894723425*^9, 
+  3.709942898758649*^9}},ExpressionUUID->"02cdc88a-9523-4ed9-8e89-\
+8c354a1851b2"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"energyRotSphericalTop", "[", 
+   RowBox[{"B_", ",", "J_"}], "]"}], ":=", 
+  RowBox[{"energyRotLinear", "[", 
+   RowBox[{"B", ",", "J"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.709942905720343*^9, 
+  3.709942905721951*^9}},ExpressionUUID->"f8a207c6-baea-4b8f-8c70-\
+89afceb56e2a"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"degenRotSphericalTop", "[", "J_", "]"}], ":=", 
+  SuperscriptBox[
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"2", "*", "J"}], "+", "1"}], ")"}], "2"]}]], "Input",
+ CellChangeTimes->{{3.709942911562525*^9, 
+  3.709942914255534*^9}},ExpressionUUID->"0ab77510-d646-40f5-8176-\
+8910abc3b423"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"energyRotSymmTop", "[", 
+   RowBox[{"A_", ",", "B_", ",", "C_", ",", "J_", ",", "K_"}], "]"}], ":=", 
+  "\[IndentingNewLine]", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Abs", "[", 
+        RowBox[{"A", "-", "B"}], "]"}], "/", "B"}], "<", "0.001"}], ")"}], 
+    ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"B", "*", "J", "*", 
+      RowBox[{"(", 
+       RowBox[{"J", "+", "1"}], ")"}]}], "+", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"A", "-", "C"}], ")"}], "*", 
+      SuperscriptBox["K", "2"]}]}], ",", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"A", " ", "is"}], ">", "B"}], ";", 
+      RowBox[{"prolate", " ", "symmetrical", " ", "top"}]}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"B", "*", "J", "*", 
+      RowBox[{"(", 
+       RowBox[{"J", "+", "1"}], ")"}]}], "-", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"A", "-", "C"}], ")"}], "*", 
+      SuperscriptBox["K", "2"]}]}]}], " ", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"else", " ", "A"}], "\[Equal]", "B", ">", "C"}], ";", 
+     RowBox[{"oblate", " ", "symmetrical", " ", "top"}]}], "*)"}], 
+   "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.709942922289558*^9, 
+  3.709942950022892*^9}},ExpressionUUID->"14f0a94d-eb86-4506-b249-\
+f6357f1b02ba"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 713},
+WindowMargins->{{Automatic, 239}, {100, Automatic}},
+FrontEndVersion->"11.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (April 18, \
+2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 191, 3, 148, "Title", "ExpressionUUID" -> \
+"782d65f2-7c3e-45ad-ba68-d0140a42bc3e"],
+Cell[774, 27, 589, 12, 49, "Text", "ExpressionUUID" -> \
+"80522b0e-1c60-4fe1-aba4-a16a607f953f"],
+Cell[CellGroupData[{
+Cell[1388, 43, 585, 14, 109, "Chapter", "ExpressionUUID" -> \
+"4e3e6317-d650-4937-bc46-f519791dc650"],
+Cell[CellGroupData[{
+Cell[1998, 61, 362, 6, 64, "Section", "ExpressionUUID" -> \
+"c0d64b44-8090-4183-9d7a-9895534b8d4c"],
+Cell[CellGroupData[{
+Cell[2385, 71, 225, 4, 44, "Subsection", "ExpressionUUID" -> \
+"89f392d9-c3b4-4d25-93d9-647edc91918d"],
+Cell[2613, 77, 338, 9, 32, "Input", "ExpressionUUID" -> \
+"df793628-ffb2-40ec-a337-220eefdc2bdd"],
+Cell[CellGroupData[{
+Cell[2976, 90, 219, 5, 32, "Input", "ExpressionUUID" -> \
+"217f59e9-6d6a-4910-87ea-5db99136ce6e"],
+Cell[3198, 97, 246, 6, 32, "Output", "ExpressionUUID" -> \
+"8197fc80-c756-4f7d-b2b6-65a536a0128f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3481, 108, 220, 5, 32, "Input", "ExpressionUUID" -> \
+"cf4736ed-949c-49e2-9fa1-0696e3c6a37f"],
+Cell[3704, 115, 155, 4, 32, "Output", "ExpressionUUID" -> \
+"99137566-856a-4fb7-987d-0d9ae322a06d"]
+}, Open  ]],
+Cell[3874, 122, 415, 7, 30, "Text", "ExpressionUUID" -> \
+"c60bb66a-1cce-4978-a55f-572bc3ee0da6"],
+Cell[CellGroupData[{
+Cell[4314, 133, 222, 5, 32, "Input", "ExpressionUUID" -> \
+"66dfe822-919a-4bd0-bcd9-df502dcc197a"],
+Cell[4539, 140, 225, 6, 32, "Output", "ExpressionUUID" -> \
+"e0a49f88-655d-45a5-a088-9a29b15f4eaf"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4801, 151, 221, 5, 32, "Input", "ExpressionUUID" -> \
+"ebbfa26f-3b72-41a8-b42f-d6e731937ac0"],
+Cell[5025, 158, 134, 3, 32, "Output", "ExpressionUUID" -> \
+"f117bbb4-2369-42aa-96d0-d37fb039f14e"]
+}, Open  ]],
+Cell[5174, 164, 328, 9, 32, "Input", "ExpressionUUID" -> \
+"1ba3a607-1789-4a1a-a06b-dce9f5574916"],
+Cell[5505, 175, 269, 7, 32, "Input", "ExpressionUUID" -> \
+"595feafb-e750-4472-b364-a69ce53fa068"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5811, 187, 180, 3, 44, "Subsection", "ExpressionUUID" -> \
+"696e23d4-a328-419f-9683-b6c30e22966e"],
+Cell[5994, 192, 680, 20, 75, "Input", "ExpressionUUID" -> \
+"47c30213-81be-4342-966e-887ca530375b"],
+Cell[CellGroupData[{
+Cell[6699, 216, 351, 9, 32, "Input", "ExpressionUUID" -> \
+"aa5a60a4-e9d1-45b5-b216-7bb3770d6e07"],
+Cell[7053, 227, 465, 13, 32, "Output", "ExpressionUUID" -> \
+"5aa23f03-40f2-44c1-9c70-494e48785fea"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7555, 245, 337, 9, 32, "Input", "ExpressionUUID" -> \
+"06d5f6d3-d96e-404a-972a-ccbc02fe428b"],
+Cell[7895, 256, 133, 3, 32, "Output", "ExpressionUUID" -> \
+"8271c474-89e9-493a-8f23-49492d9f3750"]
+}, Open  ]],
+Cell[8043, 262, 371, 10, 32, "Input", "ExpressionUUID" -> \
+"10e27608-522b-4e2e-bcbd-9f77aac6063b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8451, 277, 185, 3, 44, "Subsection", "ExpressionUUID" -> \
+"02cdc88a-9523-4ed9-8e89-8c354a1851b2"],
+Cell[8639, 282, 316, 8, 32, "Input", "ExpressionUUID" -> \
+"f8a207c6-baea-4b8f-8c70-89afceb56e2a"],
+Cell[8958, 292, 323, 9, 32, "Input", "ExpressionUUID" -> \
+"0ab77510-d646-40f5-8176-8910abc3b423"],
+Cell[9284, 303, 1402, 43, 121, "Input", "ExpressionUUID" -> \
+"14f0a94d-eb86-4506-b249-f6357f1b02ba"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
