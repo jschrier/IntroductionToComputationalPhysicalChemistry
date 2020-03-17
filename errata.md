@@ -41,11 +41,12 @@ intX[L_, t_] := NIntegrate[Conjugate[equalSuperposition[x, L, t]]*
 Plot[
  intX[L, t], {t, 0, 100},
  AxesLabel -> ...etc.
+```
 
 ## Chapter 2: The Finite Difference Method: Bound States
 
-p. 38 -- first line of code.  Missing "{" and "}" around first two
-arguments in Table[] function.  Should read:
+p. 38 -- first line of code.  Missing "`{`" and "`}`" around first two
+arguments in `Table[]` function.  Should read:
 ```
 estate2withcoords = Table[{N[a*j], estate2[[j]]}, {j, 1, nPoints}];
 ```
