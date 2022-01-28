@@ -2,18 +2,20 @@ Introduction to Computational Physical Chemistry
 
 (c) Joshua Schrier and University Science Books
 
-Publisher's Website: http://www.uscibooks.com/schrier.htm
+Publisher's Website: https://uscibooks.aip.org/books/introduction-to-computational-physical-chemistry/
 
 Buy it on Amazon: https://amzn.to/2xMeVbL
 
-# Errata (first printing) — Version: 16 Mar 2020
+# Errata (first printing, 2017) — Errata Version: 28 Jan 2022
 
-*Thanks to:*  Robert DiStasio (Cornell), Yang Yang (Lehigh), Peter Atkins (Oxford), Roderick M. Macrae (Marian), and Enrique Peacock-Lopez (Williams) 
+*Thanks to:*  Robert DiStasio (Cornell), Yang Yang (Lehigh), Peter Atkins (Oxford), Roderick M. Macrae (Marian), Enrique Peacock-Lopez (Williams), and Jordan Beck (Concordia University, Wisconsin)
 
 
 ## Chapter 1: The Particle in a Box
 
 p. 2 — Sixth line of text, typo, should read “Fr*i*edrich” [Thanks Y. Yang]
+
+p.4 - Last line of eqn 1.1, should be $\hbar/E$ (not $E/\hbar$) [Thanks J. Beck]
 
 p. 10. — Bottom of p.10 (second equation), $\psi$ on LHS should have subscript “$_n$” [Thanks R. DiStasio]
 
@@ -59,6 +61,10 @@ p. 39 — To be completely analogous to the earlier code entry, the second code 
  Timing[ Conjugate[estate2].(xcoords*estate2)*a ]
 ```
 (Note that this has no effect on the calculation because all the entries in the eigenvector are real.) [Thanks R. Macrae]
+
+p. 45 - Problem 2-4, (e), last line: All $k$'s should be $m$'s. [Thanks J. Beck]
+
+p. 46 - Problem 2-5, reduced mass for the hydrogen molecule should be *half* the value stated (value stated is the total mass, not the reduced mass.) [Thanks J. Beck]
 
 ## Chapter 3: The Finite Difference Method: Tunneling
 
