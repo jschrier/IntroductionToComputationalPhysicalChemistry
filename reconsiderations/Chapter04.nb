@@ -1,0 +1,665 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     26793,        657]
+NotebookOptionsPosition[     24785,        614]
+NotebookOutlinePosition[     25181,        630]
+CellTagsIndexPosition[     25138,        627]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Reconsideration of ICPC Chapter 4", "Section",
+ CellChangeTimes->{{3.822135737371007*^9, 3.822135740146645*^9}, {
+  3.822135790110434*^9, 3.822135800412883*^9}, {3.823341647704348*^9, 
+  3.823341647837408*^9}},ExpressionUUID->"a906bdba-4748-4c60-97c7-\
+70a4f2ab1544"],
+
+Cell["\<\
+Reconsiderations in this chapter are primarily stylistic.  I have found that \
+students find it easier to write and debug when they write short functions \
+and then include those functions inside a Table, rather than putting all of \
+the work inside the Table.  Computationally there is no fundamental \
+difference, but it separates the work a bit.\
+\>", "Text",
+ CellChangeTimes->{{3.823348497391946*^9, 3.823348504914402*^9}, {
+  3.852970440131667*^9, 3.852970482620511*^9}, {3.884779713844121*^9, 
+  3.884779746763624*^9}},ExpressionUUID->"09f35106-f28c-4a65-affd-\
+5a97b12d2d64"],
+
+Cell[CellGroupData[{
+
+Cell["Simplify \[OpenCurlyDoubleQuote]one-liners\[CloseCurlyDoubleQuote] by \
+defining intermediate functions", "Subsection",
+ CellChangeTimes->{{3.823348521295781*^9, 
+  3.823348542857359*^9}},ExpressionUUID->"8ad76a54-e1ce-46cb-aab7-\
+7cacd4c3d48c"],
+
+Cell["\<\
+There\[CloseCurlyQuote]s very little overhead in defining intermediate \
+functions, and this may make some of the logic simpler.\
+\>", "Text",
+ CellChangeTimes->{{3.823348544180732*^9, 3.823348561694633*^9}, 
+   3.852970484352681*^9},ExpressionUUID->"a52bfcfa-65a8-4800-8c37-\
+cc1ffcc2653c"],
+
+Cell[CellGroupData[{
+
+Cell["Old version (ICPC 4.3.2)", "Subsubsection",
+ CellChangeTimes->{{3.82334851819348*^9, 3.823348519830328*^9}, {
+  3.82334858778331*^9, 
+  3.823348592827662*^9}},ExpressionUUID->"588f83cf-3a37-4642-af11-\
+2e9c3026782d"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"psi1DPIB", "[", 
+     RowBox[{"n_", ",", "x_", ",", "L_"}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"Sqrt", "[", 
+      RowBox[{"2", "/", "L"}], "]"}], "*", 
+     RowBox[{"Sin", "[", 
+      RowBox[{"n", "*", "Pi", "*", 
+       RowBox[{"x", "/", "L"}]}], "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"hbar", "=", "1"}], ";", 
+   RowBox[{"L", "=", "5"}], ";", 
+   RowBox[{"b", "=", "0.1"}], ";", 
+   RowBox[{"m", "=", "1"}], ";"}], 
+  RowBox[{"(*", 
+   RowBox[{"define", " ", "constants", " ", "in", " ", 
+    RowBox[{"a", ".", "u", "."}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"nBasis", "=", "2"}], ";"}], 
+  RowBox[{"(*", 
+   RowBox[{"number", " ", "of", " ", "basis", " ", "functions"}], "*)"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"V", "[", "x_", "]"}], ":=", 
+    RowBox[{"b", "*", "x"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"hMatr", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"N", "[", 
+       RowBox[{"Integrate", "[", 
+        RowBox[{"(*", 
+         RowBox[{
+         "calculate", " ", "each", " ", "Hamiltonian", " ", "matrix", " ", 
+          "element"}], "*)"}], "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"psi1DPIB", "[", 
+           RowBox[{"i", ",", "x", ",", "L"}], "]"}], "*", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", 
+              RowBox[{"(", 
+               RowBox[{"1", "/", 
+                RowBox[{"(", 
+                 RowBox[{"2", "*", "m"}], ")"}]}], ")"}]}], "*", 
+             RowBox[{"D", "[", 
+              RowBox[{
+               RowBox[{"psi1DPIB", "[", 
+                RowBox[{"j", ",", "x", ",", "L"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"x", ",", "2"}], "}"}]}], "]"}]}], "+", 
+            "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"V", "[", "x", "]"}], "*", 
+             RowBox[{"psi1DPIB", "[", 
+              RowBox[{"j", ",", "x", ",", "L"}], "]"}]}]}], ")"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "0", ",", "L"}], "}"}]}], "]"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "1", ",", "nBasis"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j", ",", "1", ",", "nBasis"}], "}"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"Eigenvalues", "[", "hMatr", "]"}]}], "Input",
+ CellChangeTimes->{{3.82334858234475*^9, 3.823348604218252*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"47310fdf-4712-46cb-827f-64b584526116"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["New  version", "Subsubsection",
+ CellChangeTimes->{{3.823348610352607*^9, 
+  3.8233486139393377`*^9}},ExpressionUUID->"21178658-eec2-40f5-bc11-\
+be54f3a26cd2"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", 
+   RowBox[{"V", ",", "hMatr"}], "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"psi1DPIB", "[", 
+    RowBox[{"n_", ",", "x_", ",", "L_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"Sqrt", "[", 
+     RowBox[{"2", "/", "L"}], "]"}], "*", 
+    RowBox[{"Sin", "[", 
+     RowBox[{"n", "*", "Pi", "*", 
+      RowBox[{"x", "/", "L"}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"energy1DPIB", "[", 
+     RowBox[{"n_", ",", "L_", ",", "m_", ",", 
+      RowBox[{"hbar_", ":", "1"}]}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox["hbar", "2"], "*", 
+       SuperscriptBox["Pi", "2"], "*", 
+       SuperscriptBox["n", "2"]}], ")"}], "/", 
+     RowBox[{"(", 
+      RowBox[{"2", "*", "m", "*", 
+       SuperscriptBox["L", "2"]}], ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "define", " ", "potential", " ", "with", " ", "optional", " ", "parameter",
+     " ", "b", " ", "to", " ", "avoid", " ", "schleping", " ", "a", " ", 
+    "global", " ", "variable", " ", "around"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"V", "[", 
+     RowBox[{"x_", ",", 
+      RowBox[{"b_", ":", "0.1"}]}], "]"}], ":=", 
+    RowBox[{"b", "*", "x"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "calculate", " ", "each", " ", "Hamiltonian", " ", "matrix", " ", 
+    "element"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"optionally", ",", " ", 
+    RowBox[{
+    "restrict", " ", "i", " ", "and", " ", "j", " ", "to", " ", "integers", 
+     " ", "to", " ", "simplify", " ", "debugging"}]}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"provide", " ", "V", " ", "function", " ", "as", " ", "argument"}],
+    "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"hMatrixElement", "[", 
+    RowBox[{"i_Integer", ",", "j_Integer", ",", "V_", ",", 
+     RowBox[{"L_", ":", "5"}], ",", 
+     RowBox[{"m_", ":", "1"}]}], "]"}], ":=", 
+   RowBox[{"Integrate", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"psi1DPIB", "[", 
+       RowBox[{"i", ",", "x", ",", "L"}], "]"}], "*", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"(", 
+           RowBox[{"1", "/", 
+            RowBox[{"(", 
+             RowBox[{"2", "*", "m"}], ")"}]}], ")"}]}], "*", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"psi1DPIB", "[", 
+            RowBox[{"j", ",", "x", ",", "L"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "2"}], "}"}]}], "]"}]}], "+", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"V", "[", "x", "]"}], "*", 
+         RowBox[{"psi1DPIB", "[", 
+          RowBox[{"j", ",", "x", ",", "L"}], "]"}]}]}], ")"}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", "0", ",", "L"}], "}"}]}], "]"}]}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "simplified", " ", "generation", " ", "of", " ", "the", " ", "matrix"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nBasis", " ", "=", " ", "2"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"hMatr", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"hMatrixElement", "[", 
+       RowBox[{"i", ",", "j", ",", "V"}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "nBasis"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j", ",", "nBasis"}], "}"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "convert", " ", "to", " ", "numerical", " ", "form", " ", "when", " ", 
+     "needed"}], "..."}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Eigenvalues", "[", 
+  RowBox[{"N", "[", "hMatr", "]"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.823348623511101*^9, 3.8233488151786213`*^9}, {
+  3.823348846889757*^9, 3.82334892487853*^9}, {3.884779756517453*^9, 
+  3.884779770843852*^9}, {3.8847798105894213`*^9, 3.8847798492451363`*^9}},
+ CellLabel->
+  "In[209]:=",ExpressionUUID->"9927838e-2938-4168-86da-3262ab6b36f6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1.0529629745287996`", ",", "0.4339974655801364`"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.884779842571004*^9, {3.8847798736258698`*^9, 3.884779921832404*^9}},
+ CellLabel->
+  "Out[216]=",ExpressionUUID->"a211256d-b86e-45c8-ade0-98dcc5495a7e"]
+}, Open  ]],
+
+Cell["\<\
+Add a test: define the usual particle in a box as a pure anonymous function \
+(b=0)\
+\>", "Text",
+ CellChangeTimes->{{3.823348819813013*^9, 3.823348822842778*^9}, {
+  3.8847799550526533`*^9, 
+  3.884779965352849*^9}},ExpressionUUID->"c46944fd-1f88-4209-a19f-\
+bfba70cb3a2f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"hMatrixElement", "[", 
+   RowBox[{"1", ",", "1", ",", 
+    RowBox[{
+     RowBox[{"V", "[", 
+      RowBox[{"#", ",", "0"}], "]"}], "&"}]}], "]"}], "\[Equal]", 
+  RowBox[{"energy1DPIB", "[", 
+   RowBox[{"1", ",", "5", ",", "1"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.823348826269487*^9, 3.82334883509508*^9}, {
+  3.823348904607369*^9, 3.8233489304737053`*^9}, {3.8847799350865107`*^9, 
+  3.884779941314025*^9}},
+ CellLabel->
+  "In[217]:=",ExpressionUUID->"edfe2c6e-f5a0-407d-a643-a64de51c2630"],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{{3.8847798589893627`*^9, 3.884779880060327*^9}, 
+   3.884779942366892*^9},
+ CellLabel->
+  "Out[217]=",ExpressionUUID->"49eef699-745e-4954-9706-5f72aadd8ff4"]
+}, Open  ]],
+
+Cell["You can do this with a verification test.", "Text",
+ CellChangeTimes->{{3.8847799688501596`*^9, 
+  3.884779973028308*^9}},ExpressionUUID->"41277df3-93ae-4b1f-a57b-\
+bf37dad4bfff"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"VerificationTest", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"hMatrixElement", "[", 
+    RowBox[{"1", ",", "1", ",", 
+     RowBox[{
+      RowBox[{"V", "[", 
+       RowBox[{"#", ",", "0"}], "]"}], "&"}]}], "]"}], "\[Equal]", 
+   RowBox[{"energy1DPIB", "[", 
+    RowBox[{"1", ",", "5", ",", "1"}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.82334893924146*^9, 3.8233489462150307`*^9}, {
+  3.884779944876278*^9, 3.884779952869688*^9}},
+ CellLabel->
+  "In[218]:=",ExpressionUUID->"e10cb1c4-cb41-4330-9e9b-6958132676a4"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox["TestResultObject",
+    "SummaryHead"], "[", 
+   DynamicModuleBox[{Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+    
+    TemplateBox[{
+      PaneSelectorBox[{False -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]], 
+              ButtonFunction :> (Typeset`open$$ = True), Appearance -> None, 
+              BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+              "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}]], 
+            GraphicsBox[{
+              InsetBox[
+               BoxData[
+                FormBox[
+                 PaneBox[
+                  DynamicBox[
+                   FEPrivate`FrontEndResource[
+                   "MUnitExpressions", "SuccessIcon"]], Alignment -> Center, 
+                  ImageSize -> 
+                  Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], TraditionalForm]]]}, 
+             PlotRange -> {{0, 1}, {0, 1}}, Background -> GrayLevel[0.93], 
+             Axes -> False, AspectRatio -> 1, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}], Frame -> True, FrameTicks -> None, 
+             FrameStyle -> Directive[
+               Thickness[Tiny], 
+               GrayLevel[0.55]]], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Outcome: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["\"Success\"", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Test ID: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  
+                  PaneSelectorBox[{
+                   False -> TagBox["None", HoldForm], True -> StyleBox[
+                    TagBox[
+                    TagBox[
+                    TooltipBox[
+                    TagBox["None", HoldForm], "\"Copy to clipboard.\"", 
+                    TooltipStyle -> "TextStyling"], 
+                    Annotation[#, "Copy to clipboard.", "Tooltip"]& ], 
+                    EventHandlerTag[{"MouseClicked" :> CopyToClipboard[
+                    Unevaluated[None]], Method -> "Preemptive", 
+                    PassEventsDown -> Automatic, PassEventsUp -> True}]], 
+                    Background -> GrayLevel[0.85], StripOnInput -> False]}, 
+                   Dynamic[
+                    CurrentValue["MouseOver"]], ImageSize -> Automatic, 
+                   FrameMargins -> 0], "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+          AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}], True -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]], 
+              ButtonFunction :> (Typeset`open$$ = False), Appearance -> None, 
+              BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+              "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}]], 
+            GraphicsBox[{
+              InsetBox[
+               BoxData[
+                FormBox[
+                 PaneBox[
+                  DynamicBox[
+                   FEPrivate`FrontEndResource[
+                   "MUnitExpressions", "SuccessIcon"]], Alignment -> Center, 
+                  ImageSize -> 
+                  Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], TraditionalForm]]]}, 
+             PlotRange -> {{0, 1}, {0, 1}}, Background -> GrayLevel[0.93], 
+             Axes -> False, AspectRatio -> 1, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}], Frame -> True, FrameTicks -> None, 
+             FrameStyle -> Directive[
+               Thickness[Tiny], 
+               GrayLevel[0.55]]], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Outcome: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["\"Success\"", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Test ID: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  
+                  PaneSelectorBox[{
+                   False -> TagBox["None", HoldForm], True -> StyleBox[
+                    TagBox[
+                    TagBox[
+                    TooltipBox[
+                    TagBox["None", HoldForm], "\"Copy to clipboard.\"", 
+                    TooltipStyle -> "TextStyling"], 
+                    Annotation[#, "Copy to clipboard.", "Tooltip"]& ], 
+                    EventHandlerTag[{"MouseClicked" :> CopyToClipboard[
+                    Unevaluated[None]], Method -> "Preemptive", 
+                    PassEventsDown -> Automatic, PassEventsUp -> True}]], 
+                    Background -> GrayLevel[0.85], StripOnInput -> False]}, 
+                   Dynamic[
+                    CurrentValue["MouseOver"]], ImageSize -> Automatic, 
+                   FrameMargins -> 0], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Input: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  PaneBox[
+                   TagBox[
+                    PaneSelectorBox[{False -> RowBox[{
+                    RowBox[{"hMatrixElement", "[", 
+                    RowBox[{"1", ",", "1", ",", 
+                    RowBox[{
+                    RowBox[{"V", "[", 
+                    RowBox[{"#1", ",", "0"}], "]"}], "&"}]}], "]"}], 
+                    "\[Equal]", 
+                    RowBox[{"energy1DPIB", "[", 
+                    RowBox[{"1", ",", "5", ",", "1"}], "]"}]}], True -> 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TooltipBox[
+                    RowBox[{
+                    RowBox[{"hMatrixElement", "[", 
+                    RowBox[{"1", ",", "1", ",", 
+                    RowBox[{
+                    RowBox[{"V", "[", 
+                    RowBox[{"#1", ",", "0"}], "]"}], "&"}]}], "]"}], 
+                    "\[Equal]", 
+                    RowBox[{"energy1DPIB", "[", 
+                    RowBox[{"1", ",", "5", ",", "1"}], "]"}]}], 
+                    "\"Copy to clipboard.\"", TooltipStyle -> "TextStyling"], 
+                    Annotation[#, "Copy to clipboard.", "Tooltip"]& ], 
+                    EventHandlerTag[{"MouseClicked" :> CopyToClipboard[
+                    
+                    Unevaluated[$CellContext`hMatrixElement[
+                    1, 1, $CellContext`V[#, 0]& ] == $CellContext`energy1DPIB[
+                    1, 5, 1]]], Method -> "Preemptive", PassEventsDown -> 
+                    Automatic, PassEventsUp -> True}]], Background -> 
+                    GrayLevel[0.85], StripOnInput -> False]}, 
+                    Dynamic[
+                    CurrentValue["MouseOver"]], ImageSize -> Automatic, 
+                    FrameMargins -> 0], Short[#, 
+                    Rational[2, 3]]& ], ImageSize -> {{1, 500}, Automatic}, 
+                   BaselinePosition -> Baseline, ContentPadding -> False, 
+                   FrameMargins -> 0, StripOnInput -> True], 
+                  "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Expected output: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  PaneBox[
+                   TagBox[
+                    PaneSelectorBox[{False -> "True", True -> StyleBox[
+                    TagBox[
+                    TagBox[
+                    TooltipBox[
+                    "True", "\"Copy to clipboard.\"", TooltipStyle -> 
+                    "TextStyling"], 
+                    Annotation[#, "Copy to clipboard.", "Tooltip"]& ], 
+                    EventHandlerTag[{"MouseClicked" :> CopyToClipboard[
+                    Unevaluated[True]], Method -> "Preemptive", 
+                    PassEventsDown -> Automatic, PassEventsUp -> True}]], 
+                    Background -> GrayLevel[0.85], StripOnInput -> False]}, 
+                    Dynamic[
+                    CurrentValue["MouseOver"]], ImageSize -> Automatic, 
+                    FrameMargins -> 0], Short[#, 
+                    Rational[2, 3]]& ], ImageSize -> {{1, 500}, Automatic}, 
+                   BaselinePosition -> Baseline, ContentPadding -> False, 
+                   FrameMargins -> 0, StripOnInput -> True], 
+                  "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Actual output: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  PaneBox[
+                   TagBox[
+                    PaneSelectorBox[{False -> "True", True -> StyleBox[
+                    TagBox[
+                    TagBox[
+                    TooltipBox[
+                    "True", "\"Copy to clipboard.\"", TooltipStyle -> 
+                    "TextStyling"], 
+                    Annotation[#, "Copy to clipboard.", "Tooltip"]& ], 
+                    EventHandlerTag[{"MouseClicked" :> CopyToClipboard[
+                    Unevaluated[True]], Method -> "Preemptive", 
+                    PassEventsDown -> Automatic, PassEventsUp -> True}]], 
+                    Background -> GrayLevel[0.85], StripOnInput -> False]}, 
+                    Dynamic[
+                    CurrentValue["MouseOver"]], ImageSize -> Automatic, 
+                    FrameMargins -> 0], Short[#, 
+                    Rational[2, 3]]& ], ImageSize -> {{1, 500}, Automatic}, 
+                   BaselinePosition -> Baseline, ContentPadding -> False, 
+                   FrameMargins -> 0, StripOnInput -> True], 
+                  "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+          AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}]}, 
+       Dynamic[Typeset`open$$], ImageSize -> Automatic]},
+     "SummaryPanel"],
+    DynamicModuleValues:>{}], "]"}],
+  TestResultObject[<|
+   "TestKey" -> 6517508896915427704, "TestID" -> None, "TestFileName" -> "", 
+    "SameTest" -> SameQ, "SameMessages" -> Testing`MessageMatchQ, 
+    "MemoryConstraint" -> DirectedInfinity[1], "TimeConstraint" -> 
+    DirectedInfinity[1], "Outcome" -> "Success", "Input" -> 
+    HoldForm[$CellContext`hMatrixElement[
+       1, 1, $CellContext`V[#, 0]& ] == $CellContext`energy1DPIB[1, 5, 1]], 
+    "ExpectedOutput" -> HoldForm[True], "ActualOutput" -> HoldForm[True], 
+    "ExpectedMessages" -> HoldForm[{}], "ActualMessages" -> {}, 
+    "AbsoluteTime" -> 3.884779953466112*^9, "AbsoluteTimeUsed" -> 
+    0.028453`4.6046430617004175, "CPUTimeUsed" -> 0.028864999999996144`, 
+    "MemoryUsed" -> 27368|>],
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",
+ CellChangeTimes->{3.8847798824801283`*^9, 3.884779953516428*^9},
+ CellLabel->
+  "Out[218]=",ExpressionUUID->"305112d0-0b53-4b50-bf68-5a270a1b8462"]
+}, Open  ]],
+
+Cell[TextData[StyleBox["Last edited:  07 Feb 2023",
+ FontSlant->"Italic"]], "Text",
+ CellChangeTimes->{{3.8847800184671717`*^9, 
+  3.884780022870479*^9}},ExpressionUUID->"7e1a91fd-64dd-48d0-bd79-\
+69afcd660943"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 747},
+WindowMargins->{{52, Automatic}, {0, Automatic}},
+FrontEndVersion->"13.2 for Mac OS X x86 (64-bit) (November 18, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"81a79caa-206c-455b-90ae-c24a664c793b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 273, 4, 67, "Section",ExpressionUUID->"a906bdba-4748-4c60-97c7-70a4f2ab1544"],
+Cell[856, 28, 593, 10, 104, "Text",ExpressionUUID->"09f35106-f28c-4a65-affd-5a97b12d2d64"],
+Cell[CellGroupData[{
+Cell[1474, 42, 251, 4, 54, "Subsection",ExpressionUUID->"8ad76a54-e1ce-46cb-aab7-7cacd4c3d48c"],
+Cell[1728, 48, 301, 6, 35, "Text",ExpressionUUID->"a52bfcfa-65a8-4800-8c37-cc1ffcc2653c"],
+Cell[CellGroupData[{
+Cell[2054, 58, 222, 4, 45, "Subsubsection",ExpressionUUID->"588f83cf-3a37-4642-af11-2e9c3026782d"],
+Cell[2279, 64, 2734, 76, 262, "Input",ExpressionUUID->"47310fdf-4712-46cb-827f-64b584526116"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5050, 145, 165, 3, 45, "Subsubsection",ExpressionUUID->"21178658-eec2-40f5-bc11-be54f3a26cd2"],
+Cell[CellGroupData[{
+Cell[5240, 152, 4274, 120, 474, "Input",ExpressionUUID->"9927838e-2938-4168-86da-3262ab6b36f6"],
+Cell[9517, 274, 288, 7, 34, "Output",ExpressionUUID->"a211256d-b86e-45c8-ade0-98dcc5495a7e"]
+}, Open  ]],
+Cell[9820, 284, 284, 7, 35, "Text",ExpressionUUID->"c46944fd-1f88-4209-a19f-bfba70cb3a2f"],
+Cell[CellGroupData[{
+Cell[10129, 295, 531, 13, 30, "Input",ExpressionUUID->"edfe2c6e-f5a0-407d-a643-a64de51c2630"],
+Cell[10663, 310, 208, 4, 34, "Output",ExpressionUUID->"49eef699-745e-4954-9706-5f72aadd8ff4"]
+}, Open  ]],
+Cell[10886, 317, 185, 3, 35, "Text",ExpressionUUID->"41277df3-93ae-4b1f-a57b-bf37dad4bfff"],
+Cell[CellGroupData[{
+Cell[11096, 324, 553, 13, 52, "Input",ExpressionUUID->"e10cb1c4-cb41-4330-9e9b-6958132676a4"],
+Cell[11652, 339, 12867, 263, 64, "Output",ExpressionUUID->"305112d0-0b53-4b50-bf68-5a270a1b8462"]
+}, Open  ]],
+Cell[24534, 605, 211, 4, 35, "Text",ExpressionUUID->"7e1a91fd-64dd-48d0-bd79-69afcd660943"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
