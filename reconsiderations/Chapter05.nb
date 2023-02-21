@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     31485,        857]
-NotebookOptionsPosition[     28208,        799]
-NotebookOutlinePosition[     28605,        815]
-CellTagsIndexPosition[     28562,        812]
+NotebookDataLength[     31526,        857]
+NotebookOptionsPosition[     28249,        799]
+NotebookOutlinePosition[     28646,        815]
+CellTagsIndexPosition[     28603,        812]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -599,14 +599,14 @@ Cell[BoxData[{
 f6b1de39edc5"],
 
 Cell["\<\
-Then our organization gets simplified.  We no longer need to track nBasis and \
+This simplifies the organization:  We no longer need to track nBasis and \
 nAtom variables, but instead store all of the data into Lists of \
 Associations.  Then the subsequent Table operations can just select each item \
 from this list of entries in a natural way:\
 \>", "Text",
  CellChangeTimes->{{3.823952664139573*^9, 3.82395270892693*^9}, {
-  3.88538131922642*^9, 
-  3.88538134410366*^9}},ExpressionUUID->"a1986bc2-ffbc-45a3-bda3-\
+  3.88538131922642*^9, 3.88538134410366*^9}, {3.886007671820898*^9, 
+  3.886007675314488*^9}},ExpressionUUID->"a1986bc2-ffbc-45a3-bda3-\
 794afae621d9"],
 
 Cell[BoxData[{
@@ -847,16 +847,16 @@ Cell[8657, 252, 783, 15, 150, "Text",ExpressionUUID->"b8997051-d7f0-47d3-9bd5-ba
 Cell[9443, 269, 852, 21, 52, "Input",ExpressionUUID->"856bd9a7-0652-44fa-a71f-075ba9af3a57"],
 Cell[10298, 292, 282, 4, 35, "Text",ExpressionUUID->"e49a6c0d-786d-487c-be82-4ac653d98964"],
 Cell[10583, 298, 10478, 300, 1174, "Input",ExpressionUUID->"42fe3508-ba26-4abe-bb8a-f6b1de39edc5"],
-Cell[21064, 600, 466, 9, 81, "Text",ExpressionUUID->"a1986bc2-ffbc-45a3-bda3-794afae621d9"],
-Cell[21533, 611, 2863, 83, 262, "Input",ExpressionUUID->"f2a6eba5-8cec-4b60-bfa1-34ae4ff46d3c"],
-Cell[24399, 696, 310, 6, 58, "Text",ExpressionUUID->"110e93ae-67e5-4536-ab3a-45ab4087e3e9"],
+Cell[21064, 600, 507, 9, 81, "Text",ExpressionUUID->"a1986bc2-ffbc-45a3-bda3-794afae621d9"],
+Cell[21574, 611, 2863, 83, 262, "Input",ExpressionUUID->"f2a6eba5-8cec-4b60-bfa1-34ae4ff46d3c"],
+Cell[24440, 696, 310, 6, 58, "Text",ExpressionUUID->"110e93ae-67e5-4536-ab3a-45ab4087e3e9"],
 Cell[CellGroupData[{
-Cell[24734, 706, 845, 19, 94, "Input",ExpressionUUID->"60190d0d-042a-4679-b0c3-ca5c79e52b35"],
-Cell[25582, 727, 447, 9, 37, "Output",ExpressionUUID->"f669b119-e855-4106-82fa-f552b08a8025"]
+Cell[24775, 706, 845, 19, 94, "Input",ExpressionUUID->"60190d0d-042a-4679-b0c3-ca5c79e52b35"],
+Cell[25623, 727, 447, 9, 37, "Output",ExpressionUUID->"f669b119-e855-4106-82fa-f552b08a8025"]
 }, Open  ]],
-Cell[26044, 739, 368, 7, 58, "Text",ExpressionUUID->"7c8de62f-55a3-4002-8ece-d442feeffb44"],
-Cell[26415, 748, 1325, 37, 157, "Input",ExpressionUUID->"05625315-dd35-4eb7-b8e2-7fd2bd4a63fe"],
-Cell[27743, 787, 437, 8, 81, "Text",ExpressionUUID->"e25459ac-1c09-4099-b782-219b64b86186"]
+Cell[26085, 739, 368, 7, 58, "Text",ExpressionUUID->"7c8de62f-55a3-4002-8ece-d442feeffb44"],
+Cell[26456, 748, 1325, 37, 157, "Input",ExpressionUUID->"05625315-dd35-4eb7-b8e2-7fd2bd4a63fe"],
+Cell[27784, 787, 437, 8, 81, "Text",ExpressionUUID->"e25459ac-1c09-4099-b782-219b64b86186"]
 }, Open  ]]
 }, Open  ]]
 }

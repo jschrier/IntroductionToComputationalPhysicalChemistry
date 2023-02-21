@@ -1,0 +1,333 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     11709,        325]
+NotebookOptionsPosition[     10313,        295]
+NotebookOutlinePosition[     10710,        311]
+CellTagsIndexPosition[     10667,        308]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Reconsideration of ICPC Chapter 8", "Section",
+ CellChangeTimes->{{3.822135737371007*^9, 3.822135740146645*^9}, {
+  3.822135790110434*^9, 3.822135800412883*^9}, {3.823341647704348*^9, 
+  3.823341647837408*^9}, {3.823943964862509*^9, 3.8239439649474487`*^9}, {
+  3.8856405018919973`*^9, 
+  3.885640502197976*^9}},ExpressionUUID->"dcf914be-2eca-4061-a85b-\
+2f2da04ac56b"],
+
+Cell["\<\
+I\[CloseCurlyQuote]m generally happy with this chapter.  The only \
+reconsideration might be (in the spirit of the notes on earlier chapters) in \
+Section 8.3.2 to include the LDA fitting parameter constants as local \
+constants of the function rather than having them as global variables, and \
+perhaps to divide the function into the two regimes instead of using an If \
+statement.\
+\>", "Text",
+ CellChangeTimes->{{3.885640508021002*^9, 3.885640527717103*^9}, {
+  3.885640561722991*^9, 3.885640591163827*^9}, {3.885660271157655*^9, 
+  3.885660310161893*^9}},ExpressionUUID->"fe14b7f8-4043-43f5-ac88-\
+bd18f4cba6e8"],
+
+Cell[CellGroupData[{
+
+Cell["Old:", "Subsection",
+ CellChangeTimes->{{3.885640585984558*^9, 
+  3.885640586510357*^9}},ExpressionUUID->"3376db1d-5a54-4928-9cc1-\
+8a42bcab7fa9"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Aparam", "=", "0.0311"}], ";", 
+  RowBox[{"Bparam", "=", 
+   RowBox[{"-", "0.048"}]}], ";", 
+  RowBox[{"Cparam", "=", "0.0020"}], ";", 
+  RowBox[{"Dparam", "=", 
+   RowBox[{"-", "0.0116"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"gamma", "=", 
+    RowBox[{"-", "0.1423"}]}], ";", 
+   RowBox[{"beta1", "=", "1.0529"}], ";", 
+   RowBox[{"beta2", "=", "0.334"}], ";"}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"LDA", "[", "rs_", "]"}], ":=", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"rs", "\[GreaterEqual]", "1"}], ",", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"PZ81", " ", "parameterization", " ", "of", " ", "Ceperley"}], 
+      "-", 
+      RowBox[{"Alder", " ", "result"}]}], "*)"}], 
+    RowBox[{"gamma", "/", 
+     RowBox[{"(", 
+      RowBox[{"1", "+", 
+       RowBox[{"beta1", "*", 
+        RowBox[{"Sqrt", "[", "rs", "]"}]}], "+", 
+       RowBox[{"beta2", "*", "rs"}]}], ")"}]}], ",", 
+    RowBox[{"(*", 
+     RowBox[{"high", " ", 
+      RowBox[{"rs", "/", "low"}], " ", "density"}], "*)"}], 
+    RowBox[{
+     RowBox[{"Aparam", "*", 
+      RowBox[{"Log", "[", "rs", "]"}]}], "+", "Bparam", "+", 
+     RowBox[{"Cparam", "*", "rs", "*", 
+      RowBox[{"Log", "[", "rs", "]"}]}], "+", 
+     RowBox[{"Dparam", "*", "rs"}]}]}], "]"}], " ", 
+  RowBox[{"(*", 
+   RowBox[{"low", " ", 
+    RowBox[{"rs", "/", "high"}], " ", "density"}], "*)"}]}]}], "Input",Express\
+ionUUID->"456e77eb-372c-4c02-a422-abb430eb2aa8"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["New:", "Subsection",
+ CellChangeTimes->{{3.885640668176674*^9, 
+  3.8856406686315823`*^9}},ExpressionUUID->"5369c571-5fb2-4c72-a2ca-\
+b12f6d90d69b"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"LDA", "[", "rs_", "]"}], ":=", 
+  RowBox[{"With", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Aparam", "=", "0.0311"}], ",", 
+      RowBox[{"Bparam", "=", 
+       RowBox[{"-", "0.048"}]}], ",", 
+      RowBox[{"Cparam", "=", "0.0020"}], ",", 
+      RowBox[{"Dparam", "=", 
+       RowBox[{"-", "0.0116"}]}], ",", "\n", 
+      RowBox[{"gamma", "=", 
+       RowBox[{"-", "0.1423"}]}], ",", 
+      RowBox[{"beta1", "=", "1.0529"}], ",", 
+      RowBox[{"beta2", "=", "0.334"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"rs", "\[GreaterEqual]", "1"}], ",", 
+      RowBox[{"(*", 
+       RowBox[{
+        RowBox[{"PZ81", " ", "parameterization", " ", "of", " ", "Ceperley"}],
+         "-", 
+        RowBox[{"Alder", " ", "result"}]}], "*)"}], 
+      RowBox[{"gamma", "/", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", 
+         RowBox[{"beta1", "*", 
+          RowBox[{"Sqrt", "[", "rs", "]"}]}], "+", 
+         RowBox[{"beta2", "*", "rs"}]}], ")"}]}], ",", 
+      RowBox[{"(*", 
+       RowBox[{"high", " ", 
+        RowBox[{"rs", "/", "low"}], " ", "density"}], "*)"}], 
+      RowBox[{
+       RowBox[{"Aparam", "*", 
+        RowBox[{"Log", "[", "rs", "]"}]}], "+", "Bparam", "+", 
+       RowBox[{"Cparam", "*", "rs", "*", 
+        RowBox[{"Log", "[", "rs", "]"}]}], "+", 
+       RowBox[{"Dparam", "*", "rs"}]}]}], "]"}]}], " ", "]"}], 
+  RowBox[{"(*", 
+   RowBox[{"low", " ", 
+    RowBox[{"rs", "/", "high"}], " ", "density"}], "*)"}]}]], "Input",
+ CellChangeTimes->{{3.885640607885845*^9, 
+  3.885640658636011*^9}},ExpressionUUID->"da88faf8-ee31-4769-a9aa-\
+7ed150e9e0c7"],
+
+Cell[TextData[{
+ "Alternatively, we could separate these into two functions to handle the two \
+different density regimes, and perform the summations by a vector dot \
+product;  the trailing ",
+ ButtonBox["/;",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://reference.wolfram.com/language/ref/Condition.html"], None},
+  ButtonNote->"http://reference.wolfram.com/language/ref/Condition.html"],
+ " (Condition) checks for for the condition to be satisfied:"
+}], "Text",
+ CellChangeTimes->{{3.885640676875581*^9, 3.885640692875503*^9}, {
+  3.8856409146193943`*^9, 3.885640956988483*^9}, {3.885659848016426*^9, 
+  3.885659857795*^9}, {3.8856599056781893`*^9, 
+  3.885659930337577*^9}},ExpressionUUID->"77d6f566-4784-4a79-a158-\
+26d7f71927a9"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Clear", "[", "LDA", "]"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"high", " ", "rs"}], " ", "=", " ", 
+    RowBox[{"low", " ", "density", " ", "limit"}]}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"LDA", "[", "rs_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"gamma", "=", 
+         RowBox[{"-", "0.1423"}]}], ",", 
+        RowBox[{"beta", "=", 
+         RowBox[{"{", 
+          RowBox[{"1.0529", ",", "0.334"}], "}"}]}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"gamma", "/", 
+       RowBox[{"(", 
+        RowBox[{"1", "+", 
+         RowBox[{"beta", ".", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Sqrt", "[", "rs", "]"}], ",", "rs"}], "}"}]}]}], 
+        ")"}]}]}], "]"}], "/;", 
+    RowBox[{"rs", ">=", "1"}]}]}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"low", " ", "rs"}], " ", "=", " ", 
+    RowBox[{"high", " ", "density", " ", "limit"}]}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"LDA", "[", "rs_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"With", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"param", " ", "=", 
+       RowBox[{"{", " ", 
+        RowBox[{"0.0311", ",", 
+         RowBox[{"-", "0.048"}], ",", "0.0020", ",", 
+         RowBox[{"-", "0.0116"}]}], "}"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"param", ".", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Log", "[", "rs", "]"}], ",", "1", ",", 
+        RowBox[{"rs", "*", 
+         RowBox[{"Log", "[", "rs", "]"}]}], ",", "rs"}], "}"}]}]}], "]"}], "/;", 
+   RowBox[{"rs", "<", "1"}]}]}]}], "Input",
+ CellChangeTimes->{{3.885640696652419*^9, 3.885640857765139*^9}, {
+  3.88564089105672*^9, 3.885640940386883*^9}, {3.8856598187629137`*^9, 
+  3.885659838931136*^9}},ExpressionUUID->"486e1941-042d-49f0-87d8-\
+db8b9513b4d9"],
+
+Cell[TextData[{
+ "I suppose that you could also describe this using a ",
+ ButtonBox["PatternTest",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://reference.wolfram.com/language/ref/PatternTest.html"], None},
+  ButtonNote->"http://reference.wolfram.com/language/ref/PatternTest.html"],
+ " on the input argument: "
+}], "Text",
+ CellChangeTimes->{{3.8856599341188917`*^9, 3.8856599408423433`*^9}, {
+  3.885660022215704*^9, 
+  3.8856600321487513`*^9}},ExpressionUUID->"e8643566-1a08-45cc-a6db-\
+e11b6f4542f5"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"LDA", "[", 
+    RowBox[{
+     RowBox[{"rs_", "?", "GreaterEqualThan"}], "[", "1", "]"}], "]"}], ":=", 
+   RowBox[{"With", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"gamma", "=", 
+        RowBox[{"-", "0.1423"}]}], ",", 
+       RowBox[{"beta", "=", 
+        RowBox[{"{", 
+         RowBox[{"1.0529", ",", "0.334"}], "}"}]}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"gamma", "/", 
+      RowBox[{"(", 
+       RowBox[{"1", "+", 
+        RowBox[{"beta", ".", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Sqrt", "[", "rs", "]"}], ",", "rs"}], "}"}]}]}], 
+       ")"}]}]}], "]"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "and", " ", "similarly", " ", "for", " ", "the", " ", "low", " ", "rs", 
+    " ", "limit"}], "*)"}]}]}], "Input",
+ CellChangeTimes->{{3.88565994924188*^9, 3.885659958312442*^9}, 
+   3.885660035130054*^9, {3.885660236967417*^9, 
+   3.88566024366278*^9}},ExpressionUUID->"79b68656-f4e1-4a3a-a1e1-\
+f10892eb19f6"],
+
+Cell[TextData[{
+ "In this simple example, Condition and PatternTest are about the same \
+complexity and probably take about the same amount of time.  In general, ",
+ ButtonBox["there are sometimes use cases where one or the other is \
+preferred. ",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://mathematica.stackexchange.com/questions/1835/using-a-\
+patterntest-versus-a-condition-for-pattern-matching"], None},
+  ButtonNote->
+   "https://mathematica.stackexchange.com/questions/1835/using-a-patterntest-\
+versus-a-condition-for-pattern-matching"]
+}], "Text",
+ CellChangeTimes->{{3.885660188858788*^9, 
+  3.885660231332116*^9}},ExpressionUUID->"8f938e04-233b-4f1a-81d8-\
+dccab7115338"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 747},
+WindowMargins->{{Automatic, 150}, {0, Automatic}},
+FrontEndVersion->"13.2 for Mac OS X x86 (64-bit) (November 18, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"2cc36034-f779-4871-9c8a-75ded70c9716"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 375, 6, 67, "Section",ExpressionUUID->"dcf914be-2eca-4061-a85b-2f2da04ac56b"],
+Cell[958, 30, 628, 11, 104, "Text",ExpressionUUID->"fe14b7f8-4043-43f5-ac88-bd18f4cba6e8"],
+Cell[CellGroupData[{
+Cell[1611, 45, 152, 3, 54, "Subsection",ExpressionUUID->"3376db1d-5a54-4928-9cc1-8a42bcab7fa9"],
+Cell[1766, 50, 1480, 42, 142, "Input",ExpressionUUID->"456e77eb-372c-4c02-a422-abb430eb2aa8"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3283, 97, 154, 3, 54, "Subsection",ExpressionUUID->"5369c571-5fb2-4c72-a2ca-b12f6d90d69b"],
+Cell[3440, 102, 1695, 45, 144, "Input",ExpressionUUID->"da88faf8-ee31-4769-a9aa-7ed150e9e0c7"],
+Cell[5138, 149, 748, 15, 81, "Text",ExpressionUUID->"77d6f566-4784-4a79-a158-26d7f71927a9"],
+Cell[5889, 166, 2065, 60, 241, "Input",ExpressionUUID->"486e1941-042d-49f0-87d8-db8b9513b4d9"],
+Cell[7957, 228, 516, 12, 35, "Text",ExpressionUUID->"e8643566-1a08-45cc-a6db-e11b6f4542f5"],
+Cell[8476, 242, 1108, 32, 115, "Input",ExpressionUUID->"79b68656-f4e1-4a3a-a1e1-f10892eb19f6"],
+Cell[9587, 276, 698, 15, 58, "Text",ExpressionUUID->"8f938e04-233b-4f1a-81d8-dccab7115338"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

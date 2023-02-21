@@ -1,0 +1,1033 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     37001,       1025]
+NotebookOptionsPosition[     32168,        928]
+NotebookOutlinePosition[     32567,        944]
+CellTagsIndexPosition[     32524,        941]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Reconsiderations of Chapter 9", "Title",
+ CellChangeTimes->{{3.8859835470669537`*^9, 
+  3.88598355103681*^9}},ExpressionUUID->"14c879a3-fe9a-40c1-af67-\
+803e08140f0f"],
+
+Cell[CellGroupData[{
+
+Cell["9.1.1 Prelude: Monte Carlo integration", "Section",
+ CellChangeTimes->{
+  3.885983701463122*^9},ExpressionUUID->"a727365e-b613-4655-b89e-\
+6851ab1649db"],
+
+Cell[CellGroupData[{
+
+Cell["Old: Procedural Style", "Subsection",
+ CellChangeTimes->{{3.8859835893444853`*^9, 3.8859835900986958`*^9}, {
+  3.886007931131957*^9, 
+  3.886007939134379*^9}},ExpressionUUID->"ca0a8516-084b-4ebd-a29f-\
+61c4ad03a684"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"areaCircle", "[", "nTotal_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y", ",", 
+      RowBox[{"nInside", "=", "0"}]}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"Do", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"x", ",", "y"}], "}"}], "=", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+           RowBox[{"{", "2", "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            SuperscriptBox["x", "2"], "+", 
+            SuperscriptBox["y", "2"]}], "\[LessEqual]", "1"}], ",", 
+          RowBox[{"nInside", "++"}]}], "]"}], ";"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"{", "nTotal", "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"4", "*", 
+      RowBox[{"nInside", "/", "nTotal"}]}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",ExpressionUUID->"8be3b143-9677-445c-a77c-f027759b89ac"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["New: Functional Style", "Subsection",
+ CellChangeTimes->{{3.885983592219317*^9, 3.885983592856408*^9}, {
+  3.886007940552829*^9, 
+  3.8860079423480787`*^9}},ExpressionUUID->"e462a273-4721-4789-a802-\
+ac85541c1917"],
+
+Cell["\<\
+Rewrite in a functional style by defining a function that checks if a point \
+is inside the circle (insideQ), and then applying it to a list of random \
+points.  Using Mean is a more elegant way (in my opinion), but you could also \
+use Total and divide by nTotal to yield the same result.  The convention in \
+general is that functions ending in Q are queries that return Boolean \
+results, and so we can keep that here.  Type checking the input for nTotal is \
+optional, but might be a good practice.  It might be tempting to make this a \
+one-liner (removing the dependence on pts), but there is conceptual clarity \
+in keeping the data (pts) separate from the process that gets applied to it:\
+\>", "Text",
+ CellChangeTimes->{{3.8860079578234787`*^9, 3.886008011395278*^9}, {
+  3.886008193863682*^9, 
+  3.886008311805379*^9}},ExpressionUUID->"6c155c4a-e13f-48ec-90f7-\
+f387206fda04"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"insideQ", "[", 
+    RowBox[{"{", 
+     RowBox[{"x_", ",", "y_"}], "}"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"x", "^", "2"}], "+", 
+      RowBox[{"y", "^", "2"}]}], ")"}], "\[LessEqual]", "1"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"areaCircle", "[", "nTotal_Integer", "]"}], ":=", 
+  RowBox[{"With", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"pts", "=", 
+      RowBox[{"RandomReal", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"nTotal", ",", "2"}], "}"}]}], "]"}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"4.", "*", 
+     RowBox[{"Mean", "@", 
+      RowBox[{"Boole", "@", 
+       RowBox[{
+        RowBox[{"Map", "[", "insideQ", "]"}], "@", "pts"}]}]}]}]}], 
+   "]"}]}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.824557109930357*^9, 3.824557276125766*^9}, {
+   3.8859848522201977`*^9, 3.8859848949574423`*^9}, 3.886008001718507*^9, {
+   3.886008261300302*^9, 
+   3.886008262982602*^9}},ExpressionUUID->"7a94d0c8-5165-4066-9186-\
+e8dc3ad8e551"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["9.1.2 Case study: Hydrogen atom", "Section",
+ CellChangeTimes->{{3.7096834632932673`*^9, 
+  3.709683467697752*^9}},ExpressionUUID->"4f6a9786-272d-4912-9df9-\
+b52503dc9069"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"trialHAtom", "[", 
+    RowBox[{"r_", ",", "alpha_"}], "]"}], ":=", 
+   RowBox[{"Exp", "[", 
+    RowBox[{
+     RowBox[{"-", "alpha"}], "*", "r"}], "]"}]}], 
+  " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"trialHAtomFirstDeriv", "[", 
+    RowBox[{"r_", ",", "alpha_"}], "]"}], ":=", 
+   RowBox[{
+    RowBox[{"-", "alpha"}], "*", 
+    RowBox[{"trialHAtom", "[", 
+     RowBox[{"r", ",", "alpha"}], "]"}]}]}], " "}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"trialHAtomSecondDeriv", "[", 
+   RowBox[{"r_", ",", "alpha_"}], "]"}], ":=", 
+  RowBox[{
+   SuperscriptBox["alpha", "2"], "*", 
+   RowBox[{"trialHAtom", "[", 
+    RowBox[{"r", ",", "alpha"}], "]"}]}]}]}], "Input",
+ CellChangeTimes->{{3.7096834755298557`*^9, 3.7096834930338383`*^9}},
+ CellLabel->
+  "In[277]:=",ExpressionUUID->"f62b3ddb-18a6-4268-b3cb-0c33803f6335"],
+
+Cell[CellGroupData[{
+
+Cell["Old: Procedural style", "Subsection",
+ CellChangeTimes->{{3.825160801563905*^9, 
+  3.825160804390482*^9}},ExpressionUUID->"3c59b5fc-9e2b-495b-b3c3-\
+887f9c319e7c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"HAtomVMC0", "[", 
+    RowBox[{"alpha_", ",", "nSamples_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"numerator", "=", "0"}], ",", 
+       RowBox[{"denominator", "=", "0"}], ",", "r", ",", "xyz", ",", 
+       RowBox[{"Z", "=", "1"}], ",", 
+       RowBox[{"el", "=", "0"}], ",", 
+       RowBox[{"mu", "=", "1"}]}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"Do", "[", 
+       RowBox[{"(*", 
+        RowBox[{
+        "loop", " ", "over", " ", "nSamples", " ", "to", " ", "evaluate", " ",
+          "integrals"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"xyz", "=", 
+          RowBox[{"RandomReal", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+            RowBox[{"{", "3", "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"r", "=", 
+          RowBox[{"Norm", "[", "xyz", "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"numerator", "+=", 
+          RowBox[{
+           RowBox[{"trialHAtom", "[", 
+            RowBox[{"r", ",", "alpha"}], "]"}], "*", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "1"}], "/", 
+               RowBox[{"(", 
+                RowBox[{"2", "*", "mu"}], ")"}]}], "*", "\[IndentingNewLine]", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"trialHAtomSecondDeriv", "[", 
+                 RowBox[{"r", ",", "alpha"}], "]"}], "+", 
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{"2", "/", "r"}], ")"}], "*", 
+                 RowBox[{"trialHAtomFirstDeriv", "[", 
+                  RowBox[{"r", ",", "alpha"}], "]"}]}]}], ")"}]}], "+", 
+             RowBox[{"el", "*", 
+              RowBox[{"(", 
+               RowBox[{"el", "+", "1"}], ")"}], "*", 
+              RowBox[{
+               RowBox[{"trialHAtom", "[", 
+                RowBox[{"r", ",", "alpha"}], "]"}], "/", 
+               RowBox[{"(", 
+                RowBox[{"2", "*", "mu", "*", 
+                 SuperscriptBox["r", "2"]}], ")"}]}]}], "-", 
+             RowBox[{"Z", "*", 
+              RowBox[{
+               RowBox[{"trialHAtom", "[", 
+                RowBox[{"r", ",", "alpha"}], "]"}], "/", "r"}]}]}], ")"}]}]}],
+          ";", 
+         RowBox[{"denominator", "+=", 
+          SuperscriptBox[
+           RowBox[{"trialHAtom", "[", 
+            RowBox[{"r", ",", "alpha"}], "]"}], "2"]}], ";"}], 
+        "\[IndentingNewLine]", ",", 
+        RowBox[{"{", "nSamples", "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"numerator", "/=", "nSamples"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"denominator", "/=", "nSamples"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"numerator", "/", "denominator"}]}]}], "\[IndentingNewLine]", 
+    "]"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"HAtomVMC0", "[", 
+   RowBox[{"1.0", ",", "100000"}], "]"}], "//", "AbsoluteTiming"}]}], "Input",\
+
+ CellChangeTimes->{{3.709683507445963*^9, 3.709683584082724*^9}, {
+   3.825160847619665*^9, 3.8251608715026407`*^9}, 3.8251612301447897`*^9},
+ CellLabel->
+  "In[305]:=",ExpressionUUID->"dd247619-c8d2-41ba-aeaf-a736e64a544c"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1.397547`", ",", 
+   RowBox[{"-", "0.5`"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.82516085056706*^9, 3.825160872090578*^9}, 
+   3.8251612317601147`*^9},
+ CellLabel->
+  "Out[306]=",ExpressionUUID->"b9eb8b0c-bf63-4dad-907d-24021a7f2781"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["New: Functional style", "Subsection",
+ CellChangeTimes->{{3.8251608072053432`*^9, 
+  3.825160827599332*^9}},ExpressionUUID->"50d09b09-ec57-4c2e-952b-\
+312b77d2e096"],
+
+Cell["\<\
+A few thoughts on this section.
+1) It is useful to divide the work \
+\>", "Text",
+ CellChangeTimes->{{3.8860080245601053`*^9, 
+  3.8860080405910883`*^9}},ExpressionUUID->"130bf806-f793-4836-bde0-\
+89bad4461509"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"numerator", "[", 
+     RowBox[{"r_", ",", "alpha_", ",", 
+      RowBox[{"Z_", ":", "1"}], ",", 
+      RowBox[{"mu_", ":", "1"}], ",", 
+      RowBox[{"el_", ":", "0"}]}], "]"}], ":=", 
+    RowBox[{
+     RowBox[{"trialHAtom", "[", 
+      RowBox[{"r", ",", "alpha"}], "]"}], "*", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "1"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"2", "*", "mu"}], ")"}]}], "*", "\[IndentingNewLine]", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"trialHAtomSecondDeriv", "[", 
+           RowBox[{"r", ",", "alpha"}], "]"}], "+", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"2", "/", "r"}], ")"}], "*", 
+           RowBox[{"trialHAtomFirstDeriv", "[", 
+            RowBox[{"r", ",", "alpha"}], "]"}]}]}], ")"}]}], "+", 
+       RowBox[{"el", "*", 
+        RowBox[{"(", 
+         RowBox[{"el", "+", "1"}], ")"}], "*", 
+        RowBox[{
+         RowBox[{"trialHAtom", "[", 
+          RowBox[{"r", ",", "alpha"}], "]"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"2", "*", "mu", "*", 
+           SuperscriptBox["r", "2"]}], ")"}]}]}], "-", 
+       RowBox[{"Z", "*", 
+        RowBox[{
+         RowBox[{"trialHAtom", "[", 
+          RowBox[{"r", ",", "alpha"}], "]"}], "/", "r"}]}]}], ")"}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"denominator", "[", 
+     RowBox[{"r_", ",", "alpha_"}], "]"}], ":=", 
+    SuperscriptBox[
+     RowBox[{"trialHAtom", "[", 
+      RowBox[{"r", ",", "alpha"}], "]"}], "2"]}], "\[IndentingNewLine]", "\n", 
+   RowBox[{
+    RowBox[{"HAtomVMC0", "[", 
+     RowBox[{"alpha_", ",", "nSamples_"}], "]"}], ":=", 
+    RowBox[{"With", "[", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+      "generate", " ", "all", " ", "the", " ", "random", " ", "positions", 
+       " ", "at", " ", "once"}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"r", " ", "=", " ", 
+        RowBox[{"Norm", "/@", 
+         RowBox[{"RandomReal", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"nSamples", ",", "3"}], "}"}]}], "]"}]}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"With", "[", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "compute", " ", "the", " ", "means", " ", "in", " ", "one", " ", 
+         "shot"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"num", "=", 
+           RowBox[{"Mean", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"numerator", "[", 
+               RowBox[{"#", ",", "alpha"}], "]"}], "&"}], "/@", "r"}], 
+            "]"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"denom", "=", 
+           RowBox[{"Mean", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"denominator", "[", 
+               RowBox[{"#", ",", "alpha"}], "]"}], "&"}], "/@", "r"}], 
+            "]"}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"num", "/", "denom"}]}], "]"}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"a", " ", "bit", " ", "slower"}], ",", " ", 
+     RowBox[{"in", " ", "exchange", " ", "for", " ", "simplicity"}]}], "*)"}],
+    "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"HAtomVMC0", "[", 
+     RowBox[{"1.0", ",", "100000"}], "]"}], "//", 
+    "AbsoluteTiming"}]}]}]], "Input",
+ CellChangeTimes->{{3.825161030987337*^9, 3.8251610985824003`*^9}, {
+   3.825161163962923*^9, 3.825161164401293*^9}, {3.825161200268578*^9, 
+   3.8251612251261587`*^9}, {3.8251612790966873`*^9, 3.825161346849875*^9}, 
+   3.886008022985372*^9},ExpressionUUID->"b13ee69f-1855-4c2e-b412-\
+3420f4d939bb"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1.562351`", ",", 
+   RowBox[{"-", "0.5`"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.825161219706142*^9, 3.825161226872019*^9}, 
+   3.825161281603683*^9},
+ CellLabel->
+  "Out[310]=",ExpressionUUID->"7ec72333-5b44-4ef0-addd-63af84ab4ccb"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+
+9.1.3 Estimating error using block averages\
+\>", "Section",
+ CellChangeTimes->{{3.70968368190337*^9, 
+  3.709683688656739*^9}},ExpressionUUID->"1de253c6-384f-40c8-b0ad-\
+05163cad40cd"],
+
+Cell[CellGroupData[{
+
+Cell["Old: Procedural style", "Subsection",
+ CellChangeTimes->{{3.825161381207975*^9, 
+  3.825161385627442*^9}},ExpressionUUID->"6b61e02c-a301-41bd-aa72-\
+0c91b6b93205"],
+
+Cell["\<\
+It should be noted that Appends are relatively slow in Mathematica...but as \
+we only do this over 10 of them, it doesn\[CloseCurlyQuote]t really matter \
+much here; the gain will be mostly conceptual.  This will become more \
+\>", "Text",
+ CellChangeTimes->{{3.8251613919556*^9, 3.8251614008479223`*^9}, {
+  3.825161492227928*^9, 3.825161515962081*^9}, {3.886008070927878*^9, 
+  3.886008074299012*^9}},ExpressionUUID->"8eb7ae42-0e21-4f89-afc9-\
+b7121f8531d5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"blockAverage", "[", 
+    RowBox[{
+    "energyFunction_", ",", "alpha_", ",", "nBlocks_", ",", "nSamples_"}], 
+    "]"}], ":=", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"energy", ",", 
+       RowBox[{"energyList", "=", 
+        RowBox[{"{", "}"}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Do", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"energy", "=", 
+          RowBox[{"energyFunction", "[", 
+           RowBox[{"alpha", ",", "nSamples"}], "]"}]}], ";", 
+         RowBox[{"AppendTo", "[", 
+          RowBox[{"energyList", ",", "energy"}], "]"}], ";"}], 
+        "\[IndentingNewLine]", ",", 
+        RowBox[{"{", "nBlocks", "}"}]}], "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Mean", "[", "energyList", "]"}], ",", 
+        RowBox[{
+         RowBox[{"StandardDeviation", "[", "energyList", "]"}], "/", 
+         RowBox[{"Sqrt", "[", "nBlocks", "]"}]}]}], "}"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"blockAverage", "[", 
+   RowBox[{"HAtomVMC0", ",", "0.9", ",", "10", ",", "100000"}], "]"}], " ", "//",
+   "AbsoluteTiming"}], "\n"}], "Input",
+ CellChangeTimes->{{3.709683710178513*^9, 3.7096837335034313`*^9}, {
+  3.825161574919277*^9, 3.8251615827140408`*^9}},
+ CellLabel->
+  "In[313]:=",ExpressionUUID->"141f7b82-27db-4e1e-8bbe-d2a307181b28"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"16.100528`", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "0.49564657298367454`"}], ",", "0.0010726864578461588`"}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.825161599067577*^9},
+ CellLabel->
+  "Out[314]=",ExpressionUUID->"06703b37-d304-4d00-913f-e2b9eb8b79b5"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["New: Functional style", "Subsection",
+ CellChangeTimes->{{3.8251614197651*^9, 
+  3.825161422670239*^9}},ExpressionUUID->"a5558a9c-a85a-40a2-97bc-\
+d9e407d5afa2"],
+
+Cell["\<\
+Rather than using AppendTo, we merely build up the result with a single Table \
+call\
+\>", "Text",
+ CellChangeTimes->{{3.886008079521707*^9, 
+  3.886008091378106*^9}},ExpressionUUID->"d0686260-56d7-4d5a-814c-\
+389e938b80fd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"blockAverage", "[", 
+    RowBox[{
+    "energyFunction_", ",", "alpha_", ",", "nBlocks_", ",", "nSamples_"}], 
+    "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"With", "[", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+     "compute", " ", "the", " ", "observations", " ", "in", " ", "one", " ", 
+      "shot"}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"energyList", "=", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"energyFunction", "[", 
+          RowBox[{"alpha", ",", "nSamples"}], "]"}], ",", 
+         RowBox[{"{", "nBlocks", "}"}]}], "]"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{"return", " ", "the", " ", "desired", " ", "values"}], "*)"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Mean", "[", "energyList", "]"}], ",", 
+       RowBox[{
+        RowBox[{"StandardDeviation", "[", "energyList", "]"}], "/", 
+        RowBox[{"Sqrt", "[", "nBlocks", "]"}]}]}], "}"}]}], 
+    "\[IndentingNewLine]", "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"blockAverage", "[", 
+   RowBox[{"HAtomVMC0", ",", "0.9", ",", "10", ",", "100000"}], "]"}], " ", "//",
+   "AbsoluteTiming"}]}], "Input",
+ CellChangeTimes->{{3.825161435206361*^9, 3.825161490026835*^9}, {
+  3.825161522265213*^9, 3.825161522913907*^9}, {3.8251616075587482`*^9, 
+  3.825161607853096*^9}, {3.825161652844171*^9, 
+  3.825161667419487*^9}},ExpressionUUID->"288993a4-fe81-468e-84e2-\
+e6b630cf32e2"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"15.72616`", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "0.4935696372502484`"}], ",", "0.0008374998441084274`"}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.8251616243368073`*^9},
+ CellLabel->
+  "Out[316]=",ExpressionUUID->"a8f66e18-ba42-4c05-932d-9f69129a67f7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Even better...parallelize", "Subsubsection",
+ CellChangeTimes->{{3.825161630627366*^9, 
+  3.8251616345486507`*^9}},ExpressionUUID->"af6d9e11-432c-400a-826e-\
+901146259439"],
+
+Cell["\<\
+Only modification is changing \[OpenCurlyDoubleQuote]Table\
+\[CloseCurlyDoubleQuote]-->\[CloseCurlyDoubleQuote]Parallel\
+\[CloseCurlyDoubleQuote] table, and we get a speedup by dividing the work \
+over processors:\
+\>", "Text",
+ CellChangeTimes->{{3.82516167743104*^9, 3.8251616881501093`*^9}, {
+  3.886008099107728*^9, 
+  3.8860081084662313`*^9}},ExpressionUUID->"bf48c1dd-93ad-4a7a-bebe-\
+31399c964d47"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"blockAverage", "[", 
+    RowBox[{
+    "energyFunction_", ",", "alpha_", ",", "nBlocks_", ",", "nSamples_"}], 
+    "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"With", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"energyList", "=", 
+       RowBox[{"ParallelTable", "[", 
+        RowBox[{
+         RowBox[{"energyFunction", "[", 
+          RowBox[{"alpha", ",", "nSamples"}], "]"}], ",", 
+         RowBox[{"{", "nBlocks", "}"}]}], "]"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Mean", "[", "energyList", "]"}], ",", 
+       RowBox[{
+        RowBox[{"StandardDeviation", "[", "energyList", "]"}], "/", 
+        RowBox[{"Sqrt", "[", "nBlocks", "]"}]}]}], "}"}]}], 
+    "\[IndentingNewLine]", "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"blockAverage", "[", 
+   RowBox[{"HAtomVMC0", ",", "0.9", ",", "10", ",", "100000"}], "]"}], " ", "//",
+   "AbsoluteTiming"}]}], "Input",
+ CellChangeTimes->{{3.825161637477968*^9, 3.825161648611498*^9}},
+ CellLabel->
+  "In[323]:=",ExpressionUUID->"19ce958b-7a47-49ba-b9fd-cba452724f15"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"4.718029`", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "0.49511133874429925`"}], ",", "0.0015027394764584136`"}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.825161653941263*^9, 3.825161741314535*^9},
+ CellLabel->
+  "Out[324]=",ExpressionUUID->"d5055615-e6cd-4e04-8b74-39dda041ae3e"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Also consider: Using MeanAround, rather than providing a list\
+\>", "Subsubsection",
+ CellChangeTimes->{{3.8251616914805613`*^9, 
+  3.825161702210894*^9}},ExpressionUUID->"1af9c5ce-ab38-49a8-800d-\
+032415546499"],
+
+Cell["\<\
+We don\[CloseCurlyQuote]t expect any speed advantage for this, but we it just \
+returns a single value structured the way we want, and simplifies the code.  \
+At this point, one might be tempted to do away with defining the energyList \
+constant entirely, and just make this a single one-liner:  \
+\>", "Text",
+ CellChangeTimes->{{3.825161727498849*^9, 3.825161760937538*^9}, {
+  3.886008114031046*^9, 
+  3.886008145188827*^9}},ExpressionUUID->"f410d6ac-ea9b-4fb2-8298-\
+8d64a983a1a4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"blockAverage", "[", 
+    RowBox[{
+    "energyFunction_", ",", "alpha_", ",", "nBlocks_", ",", "nSamples_"}], 
+    "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"With", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"energyList", "=", 
+       RowBox[{"ParallelTable", "[", 
+        RowBox[{
+         RowBox[{"energyFunction", "[", 
+          RowBox[{"alpha", ",", "nSamples"}], "]"}], ",", 
+         RowBox[{"{", "nBlocks", "}"}]}], "]"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"MeanAround", "[", "energyList", "]"}]}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"blockAverage", "[", 
+   RowBox[{"HAtomVMC0", ",", "0.9", ",", "10", ",", "100000"}], "]"}], " ", "//",
+   "AbsoluteTiming"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.825161707493907*^9, 3.825161725227405*^9}},
+ CellLabel->
+  "In[321]:=",ExpressionUUID->"aa714acc-9771-4d81-b3a6-6b69da2cdc42"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"5.01383`", ",", 
+   InterpretationBox[
+    TemplateBox[{"-0.4954", "0.0012"},
+     "Around"],
+    Around[-0.49536549580678413`, 0.0011988588387961381`]]}], "}"}]], "Output",\
+
+ CellChangeTimes->{3.8251617307841167`*^9},
+ CellLabel->
+  "Out[322]=",ExpressionUUID->"927a4590-ea8d-422c-bc2c-a2a83c5e8606"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["9.1.4 Importance sampling", "Subsection",
+ CellChangeTimes->{{3.70968376219158*^9, 
+  3.709683763830193*^9}},ExpressionUUID->"d934b709-f13c-4f9a-8320-\
+704da06d2572"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"probHAtom", "[", 
+   RowBox[{"r_", ",", "alpha_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["alpha", "3"], "/", "Pi"}], ")"}], "*", 
+   SuperscriptBox[
+    RowBox[{"trialHAtom", "[", 
+     RowBox[{"alpha", ",", "r"}], "]"}], "2"]}]}], "\n", 
+ RowBox[{
+  RowBox[{"KEHAtom", "[", 
+   RowBox[{"r_", ",", "alpha_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"alpha", "/", "r"}], ")"}], "-", 
+   RowBox[{
+    SuperscriptBox["alpha", "2"], "/", "2"}]}]}], "\n", 
+ RowBox[{
+  RowBox[{"VHAtom", "[", "r_", "]"}], ":=", 
+  RowBox[{
+   RowBox[{"-", "1"}], "/", "r"}]}]}], "Input",
+ CellChangeTimes->{{3.709683773369282*^9, 3.7096837799011517`*^9}, 
+   3.825161809744092*^9},
+ CellLabel->
+  "In[325]:=",ExpressionUUID->"c3300a80-a7b2-4ce5-b259-932259b74793"],
+
+Cell[CellGroupData[{
+
+Cell["Old: Procedural style", "Subsubsection",
+ CellChangeTimes->{{3.82516180272009*^9, 
+  3.825161805858633*^9}},ExpressionUUID->"338624b1-40a7-48c9-bf24-\
+fc1eae12d50e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"HAtomVMC1", "[", 
+    RowBox[{"alpha_", ",", "nSamples_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"currentSamples", "=", "0"}], ",", 
+       RowBox[{"KEaverage", "=", "0"}], ",", 
+       RowBox[{"Vaverage", "=", "0"}], ",", "r", ",", "xyz", ",", 
+       RowBox[{"nTrials", "=", "0"}]}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"While", "[", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"currentSamples", "<", "nSamples"}], ")"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"xyz", "=", 
+          RowBox[{"RandomReal", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+            RowBox[{"{", "3", "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"r", "=", 
+          RowBox[{"Norm", "[", "xyz", "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"nTrials", "++"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"probHAtom", "[", 
+             RowBox[{"r", ",", "alpha"}], "]"}], "\[GreaterEqual]", 
+            RowBox[{"RandomReal", "[", "]"}]}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"currentSamples", "++"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"KEaverage", "+=", 
+             RowBox[{"KEHAtom", "[", 
+              RowBox[{"r", ",", "alpha"}], "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"Vaverage", "+=", 
+             RowBox[{"VHAtom", "[", "r", "]"}]}], ";"}]}], 
+          "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+       ";", "\n", 
+      RowBox[{"KEaverage", "/=", "nSamples"}], ";", "\n", 
+      RowBox[{"Vaverage", "/=", "nSamples"}], ";", 
+      RowBox[{"{", 
+       RowBox[{"KEaverage", ",", "Vaverage", ",", 
+        RowBox[{"(", 
+         RowBox[{"KEaverage", "+", "Vaverage"}], ")"}], ",", 
+        RowBox[{"N", "[", 
+         RowBox[{"nSamples", "/", "nTrials"}], "]"}]}], "}"}]}]}], "\n", 
+    "]"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"HAtomVMC1", "[", 
+   RowBox[{"1.0", ",", "5000"}], "]"}], "//", "AbsoluteTiming"}]}], "Input",
+ CellChangeTimes->{{3.709683812581761*^9, 3.70968386023074*^9}, {
+  3.825171344242947*^9, 3.825171358586123*^9}, {3.8251714955687437`*^9, 
+  3.825171496560739*^9}},
+ CellLabel->
+  "In[332]:=",ExpressionUUID->"f51b3dd4-f252-40c0-b32a-1ff6b51f2ba5"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"32.92208`", ",", 
+   RowBox[{"{", 
+    RowBox[{"0.504250802718411`", ",", 
+     RowBox[{"-", "1.0042508027184105`"}], ",", 
+     RowBox[{"-", "0.49999999999999944`"}], ",", "0.000998650623277827`"}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.825171356594699*^9, 3.8251714885233793`*^9, 
+  3.8251715297963667`*^9},
+ CellLabel->
+  "Out[333]=",ExpressionUUID->"dcd7bb80-83e7-4dd9-a039-80f52b5ee0a2"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["New: Functional style", "Subsubsection",
+ CellChangeTimes->{{3.825171330883811*^9, 
+  3.825171337754157*^9}},ExpressionUUID->"1a6a748e-a776-4f38-98b6-\
+4c09c4034d79"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"acceptanceFunction", "[", 
+    RowBox[{
+    "r_", ",", "probabilityFn_", ",", "kineticEnergyFn_", ",", 
+     "potentialFn_"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"probabilityFn", "[", "r", "]"}], ">=", 
+      RowBox[{"RandomReal", "[", "]"}]}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"kineticEnergyFn", "[", "r", "]"}], ",", 
+       RowBox[{"potentialFn", "[", "r", "]"}]}], "}"}]}], "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"HAtomVMC1", "[", 
+    RowBox[{"acceptFn_", ",", "nSamples_"}], "]"}], ":=", 
+   RowBox[{"With", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", "=", " ", 
+       RowBox[{"Norm", "/@", 
+        RowBox[{"RandomReal", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"nSamples", ",", "3"}], "}"}]}], "]"}]}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"With", "[", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"values", "=", 
+         RowBox[{"Transpose", "@", 
+          RowBox[{
+           RowBox[{"Map", "[", "acceptFn", "]"}], "@", "r"}]}]}], "}"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"With", "[", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"meanKE", " ", "=", " ", 
+            RowBox[{"Mean", "[", 
+             RowBox[{"values", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"meanPE", "=", 
+            RowBox[{"Mean", "[", 
+             RowBox[{"values", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "]"}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{"acceptedPoints", "=", 
+            RowBox[{"Length", "[", "values", "]"}]}]}], "}"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"{", 
+          RowBox[{"meanKE", ",", "meanPE", ",", 
+           RowBox[{"meanKE", "+", "meanPE"}], ",", 
+           RowBox[{"acceptedPoints", "/", "nSamples"}]}], "}"}]}], "]"}]}], 
+      "]"}]}], "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "define", " ", "a", " ", "pure", " ", "function", " ", "that", " ", 
+    "returns", " ", "the", " ", "desired", " ", "value"}], 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"acceptOn", "[", "alpha_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"accpetanceFunction", "[", 
+     RowBox[{"#", ",", 
+      RowBox[{"probHAtom", "[", 
+       RowBox[{"#", ",", "alpha"}], "]"}], ",", 
+      RowBox[{"KEHAtom", "[", 
+       RowBox[{"#", ",", "alpha"}], "]"}], ",", 
+      RowBox[{"VHatom", "[", "#", "]"}]}], "]"}], "&"}]}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"usage", " ", "example"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{"HatomVMC1", "[", 
+  RowBox[{
+   RowBox[{"acceptOn", "[", "alpha", "]"}], ",", 
+   RowBox[{"10", "^", "4"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.825172128152545*^9, 3.825172131545059*^9}, 
+   3.8859851916532927`*^9, {3.885985225477928*^9, 3.88598524415028*^9}, {
+   3.885985304185759*^9, 3.885985352586946*^9}, {3.885985402352584*^9, 
+   3.885985403114936*^9}, {3.885985454123169*^9, 
+   3.885985904276305*^9}},ExpressionUUID->"07baeb4b-54de-42d3-bab2-\
+2b64ca95e216"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 747},
+WindowMargins->{{Automatic, 119}, {-58, Automatic}},
+FrontEndVersion->"13.2 for Mac OS X x86 (64-bit) (November 18, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"4602ab1c-d49d-4028-bbec-ef0f791502d8"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 173, 3, 98, "Title",ExpressionUUID->"14c879a3-fe9a-40c1-af67-803e08140f0f"],
+Cell[CellGroupData[{
+Cell[778, 29, 159, 3, 67, "Section",ExpressionUUID->"a727365e-b613-4655-b89e-6851ab1649db"],
+Cell[CellGroupData[{
+Cell[962, 36, 222, 4, 54, "Subsection",ExpressionUUID->"ca0a8516-084b-4ebd-a29f-61c4ad03a684"],
+Cell[1187, 42, 1194, 32, 167, "Input",ExpressionUUID->"8be3b143-9677-445c-a77c-f027759b89ac"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2418, 79, 220, 4, 54, "Subsection",ExpressionUUID->"e462a273-4721-4789-a802-ac85541c1917"],
+Cell[2641, 85, 897, 14, 173, "Text",ExpressionUUID->"6c155c4a-e13f-48ec-90f7-f387206fda04"],
+Cell[3541, 101, 1235, 36, 136, "Input",ExpressionUUID->"7a94d0c8-5165-4066-9186-e8dc3ad8e551"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4825, 143, 178, 3, 67, "Section",ExpressionUUID->"4f6a9786-272d-4912-9df9-b52503dc9069"],
+Cell[5006, 148, 889, 26, 73, "Input",ExpressionUUID->"f62b3ddb-18a6-4268-b3cb-0c33803f6335"],
+Cell[CellGroupData[{
+Cell[5920, 178, 169, 3, 54, "Subsection",ExpressionUUID->"3c59b5fc-9e2b-495b-b3c3-887f9c319e7c"],
+Cell[CellGroupData[{
+Cell[6114, 185, 3369, 82, 358, "Input",ExpressionUUID->"dd247619-c8d2-41ba-aeaf-a736e64a544c"],
+Cell[9486, 269, 279, 7, 34, "Output",ExpressionUUID->"b9eb8b0c-bf63-4dad-907d-24021a7f2781"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9814, 282, 171, 3, 54, "Subsection",ExpressionUUID->"50d09b09-ec57-4c2e-952b-312b77d2e096"],
+Cell[9988, 287, 221, 6, 58, "Text",ExpressionUUID->"130bf806-f793-4836-bde0-89bad4461509"],
+Cell[CellGroupData[{
+Cell[10234, 297, 3946, 105, 392, "Input",ExpressionUUID->"b13ee69f-1855-4c2e-b412-3420f4d939bb"],
+Cell[14183, 404, 278, 7, 34, "Output",ExpressionUUID->"7ec72333-5b44-4ef0-addd-63af84ab4ccb"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14522, 418, 196, 6, 105, "Section",ExpressionUUID->"1de253c6-384f-40c8-b0ad-05163cad40cd"],
+Cell[CellGroupData[{
+Cell[14743, 428, 169, 3, 54, "Subsection",ExpressionUUID->"6b61e02c-a301-41bd-aa72-0c91b6b93205"],
+Cell[14915, 433, 470, 8, 58, "Text",ExpressionUUID->"8eb7ae42-0e21-4f89-afc9-b7121f8531d5"],
+Cell[CellGroupData[{
+Cell[15410, 445, 1533, 39, 241, "Input",ExpressionUUID->"141f7b82-27db-4e1e-8bbe-d2a307181b28"],
+Cell[16946, 486, 322, 9, 34, "Output",ExpressionUUID->"06703b37-d304-4d00-913f-e2b9eb8b79b5"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17317, 501, 167, 3, 54, "Subsection",ExpressionUUID->"a5558a9c-a85a-40a2-97bc-d9e407d5afa2"],
+Cell[17487, 506, 234, 6, 35, "Text",ExpressionUUID->"d0686260-56d7-4d5a-814c-389e938b80fd"],
+Cell[CellGroupData[{
+Cell[17746, 516, 1614, 40, 220, "Input",ExpressionUUID->"288993a4-fe81-468e-84e2-e6b630cf32e2"],
+Cell[19363, 558, 322, 9, 34, "Output",ExpressionUUID->"a8f66e18-ba42-4c05-932d-9f69129a67f7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19722, 572, 178, 3, 45, "Subsubsection",ExpressionUUID->"af6d9e11-432c-400a-826e-901146259439"],
+Cell[19903, 577, 415, 9, 58, "Text",ExpressionUUID->"bf48c1dd-93ad-4a7a-bebe-31399c964d47"],
+Cell[CellGroupData[{
+Cell[20343, 590, 1190, 31, 157, "Input",ExpressionUUID->"19ce958b-7a47-49ba-b9fd-cba452724f15"],
+Cell[21536, 623, 343, 9, 34, "Output",ExpressionUUID->"d5055615-e6cd-4e04-8b74-39dda041ae3e"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21928, 638, 222, 5, 45, "Subsubsection",ExpressionUUID->"1af9c5ce-ab38-49a8-800d-032415546499"],
+Cell[22153, 645, 495, 9, 81, "Text",ExpressionUUID->"f410d6ac-ea9b-4fb2-8298-8d64a983a1a4"],
+Cell[CellGroupData[{
+Cell[22673, 658, 1006, 25, 157, "Input",ExpressionUUID->"aa714acc-9771-4d81-b3a6-6b69da2cdc42"],
+Cell[23682, 685, 342, 10, 34, "Output",ExpressionUUID->"927a4590-ea8d-422c-bc2c-a2a83c5e8606"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24085, 702, 172, 3, 54, "Subsection",ExpressionUUID->"d934b709-f13c-4f9a-8320-704da06d2572"],
+Cell[24260, 707, 831, 26, 76, "Input",ExpressionUUID->"c3300a80-a7b2-4ce5-b259-932259b74793"],
+Cell[CellGroupData[{
+Cell[25116, 737, 171, 3, 45, "Subsubsection",ExpressionUUID->"338624b1-40a7-48c9-bf24-fc1eae12d50e"],
+Cell[CellGroupData[{
+Cell[25312, 744, 2583, 62, 388, "Input",ExpressionUUID->"f51b3dd4-f252-40c0-b32a-1ff6b51f2ba5"],
+Cell[27898, 808, 447, 11, 34, "Output",ExpressionUUID->"dcd7bb80-83e7-4dd9-a039-80f52b5ee0a2"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28394, 825, 172, 3, 45, "Subsubsection",ExpressionUUID->"1a6a748e-a776-4f38-98b6-4c09c4034d79"],
+Cell[28569, 830, 3547, 92, 430, "Input",ExpressionUUID->"07baeb4b-54de-42d3-bab2-2b64ca95e216"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
